@@ -1,22 +1,31 @@
 from app import app
-from flask import render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from app import database as db
 
-test=True
+app = Flask(__name__)
 
-@app.route("/")
+projets = [
+    {
+        'id': '321',
+        'parcelle': '9310000100234',
+        'ca': '2000000',
+        'cree_le': '2021-05-03',
+        'status': 'en cours'
+    }
+]
+
+test = True
+
+@app.route("/projets", methods=['GET'])
+def mes_projets():
+    if test: 
+        return jsonify({'Mes projets':projets})
+    
+    
+
+@app.route("/projets/?code_postal=93100&statut=en+cours", methods=['GET'])
 def homepage():
-    db = None
-    if test:
-        items = {
-            "id": 321,
-            "parcelle": 9310000100234,
-            "ca": 2000000,
-            "cree-le": '2021-05-03',
-            "status": 'en cours'
-            }
-    else:
-        items = db.fetch_todo()
+    items = db.fetch_todo()
     return render_template("index.html", items=items)
 
 
