@@ -1,0 +1,42 @@
+2- SELECT adresse, surface, cree_le, ca FROM parcelle pa
+   INNER JOIN projet pr ON pa.id=pr.parcelle
+   WHERE ville='Montreuil' AND status='en cours'
+
+2-bonus-  SELECT status, SUM(ca) FROM projet
+          GROUP BY status HAVING ville='Montreuil'
+
+
+3- import psycopg2
+   
+   #Example of connection
+   try:
+    connection = psycopg2.connect(user="youness",
+                                  password="",
+                                  host="127.0.0.1",
+                                  port="5000",
+                                  database="postgres_db")
+    cursor = connection.cursor()
+    query = "SELECT adresse, surface, cree_le, ca FROM parcelle pa
+             INNER JOIN projet pr ON pa.id=pr.parcelle
+             WHERE ville='Montreuil' AND status='en cours'"
+
+    cursor.execute(query)
+   
+    projet_list = cursor.fetchall()
+    total_CA = 0
+    for result in projet_list:
+        print("Adresse = ", result[0], )
+        print("Surface = ", float(result[1]))
+        print("Cree_le = ", result[2])
+        print("CA  = ", float(result[3]))
+	      print("Total CA = ", total_CA += float(result[3]), "\n")
+
+    except (Exception, psycopg2.Error) as error:
+    	print("Error while fetching data from PostgreSQL", error)
+
+    finally:
+    	# closing database connection.
+    	if connection:
+        	cursor.close()
+        	connection.close()
+        	print("PostgreSQL connection is closed")
