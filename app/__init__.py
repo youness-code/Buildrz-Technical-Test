@@ -20,6 +20,6 @@ def init_connection_engine():
 
 
 app = Flask(__name__)
-db = init_connection_engine()
+db = init_connection_engine
 from app import routes
 

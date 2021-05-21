@@ -27,7 +27,7 @@ class DataBase():
 
     def insert_new_project(text: str) -> int:
 
-        conn = DataBase.connect()
+        conn = db.connect()
         query = 'Insert Into project (task, status) VALUES ("{}", "{}");'.format(
             text, "Todo")
         conn.execute(query)
@@ -51,4 +51,6 @@ class DataBase():
             cur.close()
         return records
         '''
+
+    
 
